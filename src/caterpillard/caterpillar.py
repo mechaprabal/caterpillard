@@ -12,6 +12,10 @@ class CaterpillarDiagram:
 
         if relative and isinstance(self.data, pd.DataFrame):
             print("\nInitial Check:\tCorrect form of data input\n")
+
+        elif not relative and not isinstance(self.data, pd.DataFrame):
+            print("\nInitial Check:\tCorrect form of data input - Absolute analysis\n")
+
         else:
             sys.exit(
                 "\nError:\tData input type mismatched with type of analysis required\n"
@@ -134,10 +138,10 @@ class CaterpillarDiagram:
             d11 = self.data.diff(periods=1, axis=1).iloc[:, 1:]
             d12 = d11.shift(periods=-1, axis=1).iloc[:, :-1]
             d2 = d11.diff(periods=1, axis=1).iloc[:, 1:]
-            print(f"Original datqa:\n {self.data}\n")
-            print(f"d11:\n {d11.head()}")
-            print(f"d12:\n {d12.head()}")
-            print(f"d2:\n {d2.head()}")
+            print(f"Original data:\n {self.data}\n")  # log
+            print(f"d11:\n {d11.head()}")  # log
+            print(f"d12:\n {d12.head()}")  # log
+            print(f"d2:\n {d2.head()}")  # log
 
             cohort_df = []
             for i in range(d11.shape[1] - 1):
@@ -165,16 +169,68 @@ class CaterpillarDiagram:
                 cohort_data.loc[:, "n_color"] = cohort_data.apply(
                     lambda x: self.schema(x, out="n_color"), axis=1
                 )
-                # print(pd.DataFrame.from_dict(cohort_color_details))
-                # cohort_color_details_df = pd.DataFrame.from_dict(cohort_color_details)
                 cohort_df.append(cohort_data)
-            pd.concat(cohort_df).to_csv("/home/prabal/cohort_df.csv", index=False)
-            complete_cohort_df = pd.concat(cohort_df)
+
+            pd.concat(cohort_df).to_csv(
+                "/home/prabal/cohort_df.csv", index=False
+            )  # log
+            self.complete_cohort_df = pd.concat(cohort_df)
+            print(self.complete_cohort_df.head())
+
+        else:
+            print("Not a Dataframe... Converting to Pandas series")  # log
+            self.data.fillna(value=0, inplace=True)
+            d11 = self.data.diff(periods=1).iloc[1:]
+            d12 = d11.shift(periods=-1).iloc[:-1]
+            d2 = d11.diff(periods=1).iloc[1:]
+
+            print(f"Original data:\n {self.data}\n")  # log
+            print(f"d11:\n {d11}")  # log
+            print(f"d12:\n {d12}")  # log
+            print(f"d2:\n {d2}")  # log
+
+            cohort_df = []
+            cohort_data = pd.concat(
+                [
+                    pd.Series(d11.iloc[:-1].values),
+                    pd.Series(d12.values),
+                    pd.Series(d2.values),
+                ],
+                keys=["d11", "d12", "d2"],
+                axis=1,
+            )
+            # cohort_data.loc[:, "index"] = d11.name
+            cohort_name_list = [f"Cohort{i+1}" for i in range(len(cohort_data))]
+            cohort_data.loc[:, "Cohort"] = cohort_name_list
+
+            cohort_data.loc[:, "color"] = cohort_data.apply(
+                lambda x: self.schema(x, out="color"), axis=1
+            )
+
+            cohort_data.loc[:, "level"] = cohort_data.apply(
+                lambda x: self.schema(x, out="level"), axis=1
+            )
+
+            cohort_data.loc[:, "n_color"] = cohort_data.apply(
+                lambda x: self.schema(x, out="n_color"), axis=1
+            )
+            cohort_df.append(cohort_data)
+
+            pd.concat(cohort_df).to_csv(
+                "/home/prabal/cohort_df.csv", index=False
+            )  # log
+            self.complete_cohort_df = pd.concat(cohort_df)
+            print(self.complete_cohort_df.head())
 
 
 def main():
-    data = pd.read_csv("/home/prabal/caterpillar_test_data.csv", index_col=[0])
-    c_d = CaterpillarDiagram(data=data, relative=True)
+    # data = pd.read_csv("/home/prabal/caterpillar_test_data.csv", index_col=[0])
+    data1 = pd.read_csv("/home/prabal/caterpillar_test_data.csv", index_col=[0])
+    # series data
+    data = data1.iloc[80, :]
+
+    # c_d = CaterpillarDiagram(data=data, relative=True)
+    c_d = CaterpillarDiagram(data=data, relative=False)
     c_d.data_summary()
     c_d.color_schema()
 
