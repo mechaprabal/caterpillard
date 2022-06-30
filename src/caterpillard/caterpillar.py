@@ -1,5 +1,8 @@
 import sys
+import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+from collections import Counter
 
 # TODO:
 # Logging
@@ -222,17 +225,190 @@ class CaterpillarDiagram:
             self.complete_cohort_df = pd.concat(cohort_df)
             print(self.complete_cohort_df.head())
 
+    def caterpillar_assign_radius(self, diff, quartiles_threshold):
+        """
+        This function will assign the radius to each
+        cohort in a color strip.
+
+        Employing the box-plot threshold of each quartile
+        resulted from the absolute first difference, this
+        function assign radius in following fashion:
+
+        Radius of 2 units: min. of box-plot <= x < first quartile
+        Radius of 4 units: first quartile <= x <  second quartile
+        Radius of 6 units: second quartile <= x < third quartile
+        Radius of 8 units: third quartile <= x
+
+        The function will assign the radius to d11 and d12 
+        separately.  
+        Since a time period is created by d11 and d12, this function 
+        will find the mean of the radius of d11 and d12 and mark this
+        mean as the final radius for this time period.
+        """
+        #     print(d11, d12, quartiles_threshold["50%"],"\n")
+
+        minimum = quartiles_threshold["min"]
+        q1 = quartiles_threshold["25%"]
+        q2 = quartiles_threshold["50%"]
+        q3 = quartiles_threshold["75%"]
+        maximum = quartiles_threshold["max"]
+
+        if diff >= minimum and diff < q1:
+            radius = 2
+            return radius
+        elif diff >= q1 and diff < q2:
+            radius = 4
+            return radius
+        elif diff >= q2 and diff < q3:
+            radius = 6
+            return radius
+        elif diff >= q3:
+            radius = 8
+            return radius
+        else:
+            return "Error in decision"
+
+        # return d11_radius, d12_radius, final_radius
+
+    def caterpillar_size(self):
+        """
+        This method will provide the size to each 
+        cohort of the caterpillar diagram based on 
+        the first differences, d11 and d12
+        """
+        quartiles_description_d11 = pd.Series(
+            self.complete_cohort_df["d11"].abs().values.reshape(-1)
+        ).describe()
+        quartiles_description_d12 = pd.Series(
+            self.complete_cohort_df["d12"].abs().values.reshape(-1)
+        ).describe()
+        print(quartiles_description_d11, "\n\n")
+        print(quartiles_description_d12, "\n\n")
+
+        self.complete_cohort_df.loc[:, "d11_radius"] = self.complete_cohort_df[
+            "d11"
+        ].apply(
+            lambda x: self.caterpillar_assign_radius(
+                diff=abs(x), quartiles_threshold=quartiles_description_d11
+            )
+        )
+        print(self.complete_cohort_df["d11_radius"])  # log
+
+        self.complete_cohort_df.loc[:, "d12_radius"] = self.complete_cohort_df[
+            "d12"
+        ].apply(
+            lambda x: self.caterpillar_assign_radius(
+                diff=abs(x), quartiles_threshold=quartiles_description_d12
+            )
+        )
+        print(self.complete_cohort_df["d12_radius"])  # log
+
+        self.complete_cohort_df.loc[
+            :, "final_cohort_radius"
+        ] = self.complete_cohort_df.apply(
+            lambda x: np.mean([x["d11_radius"], x["d12_radius"]]), axis=1
+        )
+
+        print(self.complete_cohort_df["final_cohort_radius"])
+
+        self.complete_cohort_df.to_csv("/home/prabal/complete_cohort_details.csv")
+
+    def caterpillar_viz(self):
+        """
+        This method will take the data of each cohort and
+        create a visualization of the caterpillar diagram
+        """
+
+        # circle1 = plt.Circle((0, 0), 0.2, color="r")
+        # circle2 = plt.Circle((0.5, 0.5), 0.2, color="blue")
+        # circle3 = plt.Circle((1, 1), 0.2, color="g", clip_on=False)
+
+        # fig, ax = plt.subplots()  # note we must use plt.subplots, not plt.subplot
+        # # (or if you have an existing figure)
+        # # fig = plt.gcf()
+        # # ax = fig.gca()
+
+        # ax.add_patch(circle1)
+        # ax.add_patch(circle2)
+        # ax.add_patch(circle3)
+
+        # fig.savefig("/home/prabal/plotcircles.png")
+        # # fig.show("/home/prabal/plotcircles.png")
+
+    def schema_transitions(self):
+        """
+        This method will collect the consecutive
+        transitions between each cohort
+        """
+        temp_x = self.complete_cohort_df["color"]
+        temp_y = temp_x.shift(periods=-1)
+        temp_z = list(zip(temp_x, temp_y))[:-1]
+
+        self.transition_count = Counter(temp_z)
+        print(self.transition_count)  # log
+
+        self.transition_mat = pd.DataFrame(
+            index=["red", "orange", "yellow", "cyan", "blue", "green", "grey"],
+            columns=["red", "orange", "yellow", "cyan", "blue", "green", "grey"],
+        )
+
+        for key, value in dict(self.transition_count).items():
+            self.transition_mat.loc[key[0], key[1]] = value
+
+        print(self.transition_mat)
+
+    def stationary_matrix(self, simulation=True):
+        """
+        This method will generate the stationary 
+        transition matrix using either simulation approach
+        or algebraic approach
+        """
+        # trans_mat_array = self.transition_mat.fillna(value=0).to_numpy()
+        self.trans_mat_prob = (
+            self.transition_mat.div(self.transition_mat.sum(axis=1), axis=0)
+            .fillna(value=0)
+            .copy()
+        )
+
+        if simulation:
+            n = 10 ** 6
+            stationary_mat = self.trans_mat_prob
+
+            while n != 0:
+                stationary_mat = np.matmul(stationary_mat, self.trans_mat_prob)
+                n -= 1
+
+            print(
+                pd.DataFrame(
+                    stationary_mat,
+                    index=["red", "orange", "yellow", "cyan", "blue", "green", "grey"],
+                    columns=[
+                        "red",
+                        "orange",
+                        "yellow",
+                        "cyan",
+                        "blue",
+                        "green",
+                        "grey",
+                    ],
+                )
+            )
+
 
 def main():
-    # data = pd.read_csv("/home/prabal/caterpillar_test_data.csv", index_col=[0])
-    data1 = pd.read_csv("/home/prabal/caterpillar_test_data.csv", index_col=[0])
+    data = pd.read_csv("/home/prabal/caterpillar_test_data.csv", index_col=[0])
+    # data1 = pd.read_csv("/home/prabal/caterpillar_test_data.csv", index_col=[0])
     # series data
-    data = data1.iloc[80, :]
+    # data = data1.iloc[80, :]
 
-    # c_d = CaterpillarDiagram(data=data, relative=True)
-    c_d = CaterpillarDiagram(data=data, relative=False)
+    c_d = CaterpillarDiagram(data=data, relative=True)
+    # c_d = CaterpillarDiagram(data=data, relative=False)
     c_d.data_summary()
     c_d.color_schema()
+    c_d.caterpillar_size()
+    # c_d.caterpillar_viz()
+    c_d.schema_transitions()
+    c_d.stationary_matrix()
 
 
 if __name__ == "__main__":
