@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "caterpillar_test_mechaprabal"
+version = "0.1"
+authors = [
+  { name="Prabal Pratap Singh", email="mechaprabal@gmail.com" },
+]
+description = "Caterpillar Diagram Test"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: AGPLv3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+  'numpy',
+  'pandas',
+  'matplotlib',
+  'progressbar2',
+]
+
+[project.urls]
+"Homepage" = ""
+"Bug Tracker" = ""
