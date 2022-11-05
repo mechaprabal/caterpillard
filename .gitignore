@@ -208,5 +208,5 @@ tags
 
 # Ignore code-workspaces
 *.code-workspace
-
+caterpillard_output/*
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,vim
