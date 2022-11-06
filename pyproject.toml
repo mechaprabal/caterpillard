@@ -22,6 +22,7 @@ dependencies = [
   'matplotlib',
   'progressbar2',
   'sphinx',
+  'myst-parser',
 ]
 
 [project.urls]
