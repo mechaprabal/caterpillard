@@ -62,6 +62,8 @@ class CaterpillarDiagram:
         Initial summary of the data provided as input
         for analysis
         """
+        self.logger.debug("Summarizing Data")
+        print("Summarizing Data")
         self.logger.info(self.data.head())
         self.logger.debug(f"Length of data: {len(self.data.T)}")
         self.logger.debug(f"Number of cohorts in caterpillar: {len(self.data.T) - 2}")
@@ -174,6 +176,8 @@ class CaterpillarDiagram:
             1. Cohort details
             2. Color for each cohort
         """
+        self.logger.debug("Generating Schema")
+        print("Generating Schema")
         if isinstance(self.data, pd.DataFrame):
             self.logger.debug("DataFrame received")  # Log
             self.logger.debug("Filling NAs with zero")
@@ -317,15 +321,16 @@ class CaterpillarDiagram:
         cohort of the caterpillar diagram based on
         the first differences, d11 and d12
         """
-
+        self.logger.debug("Calculating sizes for each cohort")
+        print("Calculating sizes for each cohort")
         quartiles_description_d11 = pd.Series(
             self.complete_cohort_df["d11"].abs().values.reshape(-1)
         ).describe()
         quartiles_description_d12 = pd.Series(
             self.complete_cohort_df["d12"].abs().values.reshape(-1)
         ).describe()
-        self.logger.info(quartiles_description_d11, "\n\n")
-        self.logger.info(quartiles_description_d12, "\n\n")
+        self.logger.info(quartiles_description_d11)
+        self.logger.info(quartiles_description_d12)
 
         self.complete_cohort_df.loc[:, "d11_radius"] = self.complete_cohort_df[
             "d11"
@@ -363,6 +368,9 @@ class CaterpillarDiagram:
         transitions between each cohort for complete
         dataset
         """
+        self.logger.debug("Finding transitions")
+        print("Finding transitions")
+
         temp_x = self.complete_cohort_df["color"]
         temp_y = temp_x.shift(periods=-1)
         temp_z = list(zip(temp_x, temp_y))[:-1]
@@ -387,6 +395,8 @@ class CaterpillarDiagram:
         transition matrix using either simulation approach
         or algebraic approach
         """
+        self.logger.debug("Finding stationary matrix")
+        print("Finding stationary matrix")
         # trans_mat_array = self.transition_mat.fillna(value=0).to_numpy()
         self.trans_mat_prob = (
             self.transition_mat.div(self.transition_mat.sum(axis=1), axis=0)
@@ -415,6 +425,8 @@ class CaterpillarDiagram:
         and generates stationary matrix sequentially
         """
         # TODO: create this method using the main function
+        self.logger.debug("Generating caterpillar diagram")
+        print("Generating caterpillar diagram")
         # Initialize
         # cx and cy are the initial center of the first cohort
         cx = [0]

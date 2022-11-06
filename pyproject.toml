@@ -21,6 +21,7 @@ dependencies = [
   'pandas',
   'matplotlib',
   'progressbar2',
+  'sphinx',
 ]
 
 [project.urls]
