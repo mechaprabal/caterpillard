@@ -546,6 +546,9 @@ class CaterpillarDiagram:
 
 
 def main():
+    """
+    Main Function
+    """
 
     # # full dataframe input - relative analysis as True
     # data = pd.read_csv(

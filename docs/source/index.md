@@ -14,18 +14,16 @@ This documentation is under active development.
 
 
 
-
-
 ```{toctree}
-:caption: 'Contents:'
-:maxdepth: 2
+:caption: 'Contents'
+:maxdepth: 4
 
 usage
 notebooks/tutorial
 ```
 
-# Indices and tables
+<!-- # Indices and tables
 
 - {ref}`genindex`
 - {ref}`modindex`
-- {ref}`search`
+- {ref}`search` -->
