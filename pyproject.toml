@@ -21,9 +21,10 @@ dependencies = [
   'pandas',
   'matplotlib',
   'progressbar2',
-  'sphinx',
-  'myst-parser',
-  'sphinx-autobuild',
+  'sphinx', # for documentation
+  'myst-parser', # markdown parser for sphinx
+  'sphinx-autobuild', # monitor for doc changes
+  'furo', #theme for documentation
 ]
 
 [project.urls]

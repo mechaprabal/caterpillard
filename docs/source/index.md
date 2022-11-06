@@ -7,7 +7,7 @@
 ```{include} ../../README.md
 ```
 ```{warning}
-This documentation is under active development.
+This documentation is under active development. 
 ```
 
 ```{toctree}
