@@ -23,6 +23,7 @@ dependencies = [
   'progressbar2',
   'sphinx',
   'myst-parser',
+  'sphinx-autobuild',
 ]
 
 [project.urls]

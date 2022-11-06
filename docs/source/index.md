@@ -3,7 +3,12 @@
 % You can adapt this file completely to your liking, but it should at least
 % contain the root `toctree` directive.
 
-# Welcome to Caterpillar Diagram's documentation!
+
+```{include} ../../README.md
+```
+```{warning}
+This documentation is under active development.
+```
 
 ```{toctree}
 :caption: 'Contents:'
