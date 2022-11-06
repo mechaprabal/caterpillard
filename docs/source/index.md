@@ -9,10 +9,18 @@
 ```{warning}
 This documentation is under active development. 
 ```
+1. Read installation instructions at {ref}`Installation`.
+2. 
+
+
+
+
 
 ```{toctree}
 :caption: 'Contents:'
 :maxdepth: 2
+
+usage
 ```
 
 # Indices and tables
