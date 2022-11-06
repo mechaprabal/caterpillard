@@ -21,6 +21,7 @@ This documentation is under active development.
 :maxdepth: 2
 
 usage
+notebooks/tutorial
 ```
 
 # Indices and tables

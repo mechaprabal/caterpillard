@@ -34,6 +34,7 @@ extensions = [
     "myst_parser",
     "sphinx.ext.duration",  # time taken to build
     "sphinx.ext.autosectionlabel",  # for referring to particular sections
+    "nbsphinx",  # for notebooks in docs
 ]
 
 # Add any paths that contain templates here, relative to this directory.

@@ -25,6 +25,7 @@ dependencies = [
   'myst-parser', # markdown parser for sphinx
   'sphinx-autobuild', # monitor for doc changes
   'furo', #theme for documentation
+  'nbsphinx', # for notebooks in docs
 ]
 
 [project.urls]
