@@ -26,6 +26,7 @@ dependencies = [
   'sphinx-autobuild', # monitor for doc changes
   'furo', #theme for documentation
   'nbsphinx', # for notebooks in docs
+  'sphinxcontrib-napoleon', # for numpy style docstrings
 ]
 
 [project.urls]

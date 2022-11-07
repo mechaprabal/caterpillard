@@ -11,10 +11,10 @@ To install `caterpillard` package from PyPI:
 ## Method definitions
 
 ```{eval-rst}
-.. autofunction:: caterpillar.main
+.. autoclass:: caterpillar.CaterpillarDiagram
+   :members:
 ```
 
 ```{eval-rst}
-.. autoclass:: caterpillar.CaterpillarDiagram
-   :members:
+.. autofunction:: caterpillar.main
 ```
