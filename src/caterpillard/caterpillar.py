@@ -11,20 +11,6 @@ from pathlib import Path
 from time import sleep
 from progressbar import progressbar
 
-# TODO: implement logger using sutra code I did
-# logger_cd = logging.getLogger(__name__)
-
-# # handler
-# console_hand = logging.StreamHandler()
-# console_hand.setLevel(logging.DEBUG)
-# # Format log
-# log_format = logging.Formatter("%(name)s-%(levelname)s-%(message)s")
-# console_hand.setFormatter(log_format)
-# # add handler to logger_cd
-# logger_cd.addHandler(console_hand)
-
-# logger_cd.warning("This is a warning")
-
 
 class CaterpillarDiagram:
     """Main class for generating Caterpillar Diagram and subsequent forecasting
