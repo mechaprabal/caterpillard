@@ -8,6 +8,7 @@ To install `caterpillard` package from PyPI:
 (env) $ pip install caterpillard
 ```
 
+
 ## Method definitions
 
 ```{eval-rst}

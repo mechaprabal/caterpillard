@@ -40,6 +40,12 @@ extensions = [
     "sphinxcontrib.napoleon",  # for numpy style documentation
 ]
 
+autodoc_default_options = {
+    "members": True,
+    "member-order": "bysource",
+    "special-members": "__init__",
+}
+
 # Napoleon settings
 napoleon_google_docstring = True
 napoleon_numpy_docstring = True
