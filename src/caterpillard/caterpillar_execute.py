@@ -23,10 +23,17 @@ def main():
 
     # full dataframe input - relative analysis as True
     data = pd.read_csv(
+        # "/home/prabal/code_testbed_general/caterd/input/caterpillar_test_data10.csv",
         "/home/prabal/code_testbed_general/caterd/input/caterpillar_test_data.csv",
+        # "/home/prabal/code_testbed_general/caterd/input/caterpillar_test_data_less3.csv",
         index_col=[0],
     )
-    c_d = CaterpillarDiagram(data=data, relative=True, output_path=None)
+    # print(data.index.values)
+    c_d = CaterpillarDiagram(
+        data=data,
+        relative=True,
+        output_path="/home/prabal/code_testbed_general/caterd/output/",
+    )
 
     #########################################################
 
@@ -34,8 +41,9 @@ def main():
     c_d.color_schema()
     c_d.caterpillar_size()
     c_d.schema_transitions()
-    c_d.stationary_matrix(n_sim_iter=10 ** 4)
-    c_d.generate(data_index=44, n_last_cohorts=None)
+    print(c_d.complete_cohort_df["data_index"].unique())
+    c_d.stationary_matrix(n_sim_iter=10 ** 3)
+    c_d.generate(data_index=92, n_last_cohorts=15)
 
     # # Single series input
     # data1 = pd.read_csv(

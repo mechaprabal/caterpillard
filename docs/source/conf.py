@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.abspath("../../src/caterpillard"))
 # -- Project information -----------------------------------------------------
 
 project = "Caterpillar Diagram"
-copyright = "2022, Prabal Pratap Singh"
+copyright = "2023, Prabal Pratap Singh"
 author = "Prabal Pratap Singh"
 
 # The full version, including alpha/beta/rc tags

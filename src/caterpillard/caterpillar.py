@@ -60,28 +60,72 @@ class CaterpillarDiagram:
 
         """
         self.logger = logging.getLogger(__name__)
-        self.data = data
-        self.relative = relative
+
+        # Raise exceptions for non-compliant inputs from user
+        if isinstance(data, pd.DataFrame) or isinstance(data, pd.Series):
+            self.logger.info("Input Data type is correct")
+            self.data = data
+            try:
+                self.logger.debug(len(self.data.T))
+
+                assert (
+                    len(self.data.T) >= 3
+                ), "Inappropriate length of wide format input data"
+            except AssertionError as e:
+                sys.exit(e)
+
+        else:
+            raise TypeError(
+                "Input parameter 'data' should be Pandas Series or Pandas DataFrame"
+            )
+
+        if isinstance(relative, bool):
+            self.logger.info("Parameter relative is of correct data type")
+            self.relative = relative
+        else:
+            raise TypeError("Parameter relative must be of Boolean Type")
+
         if output_path is not None:
-            self.output_path = output_path
+            # Check if user-defined path is in string format
+            if isinstance(output_path, str):
+                self.logger.info("Parameter output_path is of correct data type")
+
+                # Check if the user-defined output path exists and is a directory
+                if Path(output_path).exists():
+                    self.output_path = output_path
+                else:
+                    raise FileNotFoundError
+            else:
+                raise TypeError("Parameter output_path must be of String")
+
         else:
             out_path = Path.cwd() / "caterpillard_output"
             if out_path.is_dir():
                 self.logger.debug("Output directory already exists")
                 self.output_path = out_path
             else:
-                out_path.mkdir()  # TODO: create try-except here
+                try:
+                    out_path.mkdir()
+                except FileExistsError:
+                    sys.exit("Not able to create directory for output path")
+                except OSError:
+                    sys.exit(
+                        "Operating System level error when creating mentioned directory"
+                    )
+
                 self.logger.info(
                     f"Directory created:\t{Path.cwd() / 'caterpillard_output'}"
                 )
                 self.output_path = out_path
 
         if relative and isinstance(self.data, pd.DataFrame):
-            self.logger.debug("\nInitial Check:\tCorrect form of data input\n")
+            self.logger.debug(
+                "\nInitial Check:\tCorrect form of data input for relative analysis\n"
+            )
 
         elif not relative and not isinstance(self.data, pd.DataFrame):
             self.logger.debug(
-                "\nInitial Check:\tCorrect form of data input - Individual\n"
+                "\nInitial Check:\tCorrect form of data input for Individual analysis\n"
             )
 
         else:
@@ -114,7 +158,8 @@ class CaterpillarDiagram:
         """
         self.logger.debug("Summarizing Data")
         print("Summarizing Data")
-        self.logger.info(self.data.head())
+        self.logger.info(self.data.info())
+        self.logger.info(self.data.T.info())
         self.logger.debug(f"Length of data: {len(self.data.T)}")
         self.logger.debug(f"Number of cohorts in caterpillar: {len(self.data.T) - 2}")
         self.n_cohorts = len(self.data.T) - 2
@@ -172,6 +217,14 @@ class CaterpillarDiagram:
 
         n_color : int
         """
+        try:
+            error_msg = (
+                "Output type for this method doesn't match. Check Documentation."
+            )
+            assert out in ["color", "level", "n_color"], error_msg
+        except AssertionError as e:
+            sys.exit(e)
+
         level = []
         color = []
         if data["d11"] == 0 and data["d12"] == 0 and data["d2"] == 0:
@@ -237,6 +290,9 @@ class CaterpillarDiagram:
                 self.logger.debug(
                     f"Sign combination:\t{data['d11']}\t{data['d12']}\t{data['d2']}"
                 )
+                raise ValueError("Fatal:\tSign combination Not Captured\n")
+                sys.exit()
+
         # Conditional return
         if out == "color":
             return color
@@ -287,8 +343,12 @@ class CaterpillarDiagram:
             self.logger.info(f"d12:\n {d12.head()}")  # log
             self.logger.info(f"d2:\n {d2.head()}")  # log
 
+            self.logger.debug(f"shape: {d11.shape}")
             cohort_df = []
-            for i in range(d11.shape[1] - 1):
+            # in relative analysis, d11, d12 and d2 is a
+            # dataframe. So, iter as many times as there are
+            # unique index rows in d11. So, d11.shape[0]-1
+            for i in range(d11.shape[0] - 1):
                 cohort_data = pd.concat(
                     [
                         pd.Series(d11.iloc[i, :-1].values),
@@ -303,7 +363,8 @@ class CaterpillarDiagram:
                 cohort_data.loc[:, "Cohort"] = cohort_name_list
 
                 cohort_data.loc[:, "color"] = cohort_data.apply(
-                    lambda x: self.schema(x, out="color"), axis=1
+                    lambda x: self.schema(x, out="color"),
+                    axis=1,  # TODO: change to func arg
                 )
 
                 cohort_data.loc[:, "level"] = cohort_data.apply(
@@ -315,11 +376,12 @@ class CaterpillarDiagram:
                 )
                 cohort_df.append(cohort_data)
 
-            pd.concat(cohort_df).to_csv(
+            self.complete_cohort_df = pd.concat(cohort_df, axis=0)
+            self.complete_cohort_df.to_csv(
                 f"{self.output_path}/cohort_df.csv", index=False,
             )  # log
-            self.complete_cohort_df = pd.concat(cohort_df)
-            self.logger.debug(self.complete_cohort_df.head())
+            # self.complete_cohort_df = pd.concat(cohort_df)
+            self.logger.debug(self.complete_cohort_df.info())
 
         else:
             self.logger.debug("Not a Dataframe... Converting to Pandas series")  # log
@@ -361,9 +423,14 @@ class CaterpillarDiagram:
             )
             cohort_df.append(cohort_data)
 
-            pd.concat(cohort_df).to_csv(
-                f"{self.output_path}/cohort_df.csv", index=False,
-            )  # log
+            try:
+                pd.concat(cohort_df).to_csv(
+                    f"{self.output_path}/cohort_df.csv", index=False,
+                )
+            except Exception as e:
+                sys.exit(e)
+            else:
+                self.logger.info("Cohort DataFrame saved to filesystem\n")  # log
             self.complete_cohort_df = pd.concat(cohort_df)
             self.logger.debug(self.complete_cohort_df.head())
 
@@ -458,7 +525,7 @@ class CaterpillarDiagram:
         ).describe()
         self.logger.info(quartiles_description_d11)
         self.logger.info(quartiles_description_d12)
-
+        self.logger.debug(f"length check 1: {len(self.complete_cohort_df)}")
         self.complete_cohort_df.loc[:, "d11_radius"] = self.complete_cohort_df[
             "d11"
         ].apply(
@@ -484,10 +551,17 @@ class CaterpillarDiagram:
         )
 
         self.logger.debug(self.complete_cohort_df["final_cohort_radius"])
-
-        self.complete_cohort_df.to_csv(
-            f"{self.output_path}/complete_cohort_details.csv",
+        self.logger.info(
+            f"ccd length before writing:\n" f"{len(self.complete_cohort_df)}"
         )
+        try:
+            self.complete_cohort_df.to_csv(
+                f"{self.output_path}/complete_cohort_details.csv",
+            )
+        except Exception as e:
+            sys.exit(e)
+        else:
+            self.logger.info("Complete cohort details saved to filesystem\n")
 
     def schema_transitions(self):
         """
@@ -555,11 +629,19 @@ class CaterpillarDiagram:
         self.logger.debug("Finding stationary matrix")
         print("Finding stationary matrix")
         # trans_mat_array = self.transition_mat.fillna(value=0).to_numpy()
-        self.trans_mat_prob = (
-            self.transition_mat.div(self.transition_mat.sum(axis=1), axis=0)
-            .fillna(value=0)
-            .copy()
-        )
+        try:
+            # Replace zero row sum with 1 to remove zeroDivision error
+            self.trans_mat_prob = (
+                self.transition_mat.div(
+                    self.transition_mat.sum(axis=1).replace({0: 1}), axis=0
+                )
+                .fillna(value=0)
+                .copy()
+            )
+        except ZeroDivisionError as e:
+            sys.exit(e)
+        else:
+            self.logger.info("Transition matrix probabilities evaluation complete")
 
         stationary_mat = self.trans_mat_prob
 
@@ -619,6 +701,22 @@ class CaterpillarDiagram:
             Caterpillar Diagram
             needs to be generated 
         """
+        try:
+            err_msg = "data_index should be an integer"
+            assert type(data_index) is int or data_index is None, err_msg
+        except AssertionError as e:
+            sys.exit(f"data_index parameter error \n {e}")
+        else:
+            self.logger.debug("data_index parameter Type correct")
+
+        try:
+            err_msg = "n_last_cohort should be an integer"
+            assert type(n_last_cohorts) is int or n_last_cohorts is None, err_msg
+        except AssertionError as e:
+            sys.exit(f"n_last_cohort parameter error \n {e}")
+        else:
+            self.logger.debug("n_last_cohort parameter Type correct")
+
         self.logger.debug("Generating caterpillar diagram")
         # Initialize
         # cx and cy are the initial center of the first cohort
@@ -630,7 +728,16 @@ class CaterpillarDiagram:
             # all cohorts will be used for generating caterpillar
             n = self.n_cohorts
         else:
-            n = n_last_cohorts
+            try:
+                err_msg = (
+                    "User-defined n_last_cohorts integer is more than available cohorts"
+                )
+                assert self.n_cohorts >= n_last_cohorts, err_msg
+            except AssertionError as e:
+                sys.exit(e)
+            else:
+                self.logger.debug("n_last_cohorts value checked")
+                n = n_last_cohorts
 
         if self.relative and data_index is not None:
             """
@@ -638,17 +745,28 @@ class CaterpillarDiagram:
             the following code will allow to choose
             an index from the data to create caterpillar
             """
-            sleep(2)
+            sleep(1)
+            self.logger.info(f"ccd length:\n" f"{len(self.complete_cohort_df)}")
+            sleep(1)
             self.logger.info(
                 f"Available options:\n"
                 f"{self.complete_cohort_df['data_index'].unique()}"
             )
             self.logger.info(f"Chosen:\t{data_index}")
             sleep(0.7)
+            # TODO: ask the user to choose the index
 
-            chosen_subset = self.complete_cohort_df[
-                self.complete_cohort_df["data_index"] == data_index
-            ].copy()
+            try:
+                err_msg = "chosen data index is not in processed cohort details"
+                assert (
+                    data_index in self.complete_cohort_df["data_index"].unique()
+                ), err_msg
+            except AssertionError as e:
+                sys.exit(e)
+            else:
+                chosen_subset = self.complete_cohort_df[
+                    self.complete_cohort_df["data_index"] == data_index
+                ].copy()
 
             # radii will use the list of radius of each consecutive
             # cohort calculated earlier
@@ -680,7 +798,7 @@ class CaterpillarDiagram:
         # lx_e is the list of ending coordinates for line
         # between each cohort
         lx_e = []
-
+        self.logger.debug(f"Radius list:\n{radii}")
         # Process
         for i in range(n):
             if i < n - 1:
@@ -697,22 +815,23 @@ class CaterpillarDiagram:
         cy = ly = 0
 
         # Preparing figure
-        fig, ax = plt.subplots(figsize=(70, 7))
+        fig, ax = plt.subplots(figsize=(n / 5 * 7, 9))
         ax.set_facecolor("white")
         circle_patch = []
         style_cohort = dict(
-            # size=7,
-            color="black",
-            rotation=90,
-            fontfamily="Palatino Linotype",
+            size=7, color="black", rotation=90, fontfamily="Palatino Linotype",
         )
         style_radii = dict(
             size=5, color="black", rotation=0, fontfamily="Palatino Linotype",
         )
 
         for i in range(n):
-            circle_patch.append(plt.Circle((cx[i], cy), radii[i], color=colors[i]))
-            ax.text(cx[i] - 0.5, -18, f"Cohort {i+1}", **style_cohort)
+            circle_patch.append(
+                plt.Circle((cx[i], cy), radii[i], facecolor=colors[i], edgecolor="None")
+            )
+            ax.text(
+                cx[i] - 0.5, -18, f"Cohort {i+1}", **style_cohort,
+            )
             ax.text(cx[i] - 1, cy + 1, f"R={radii[i]}", **style_radii)
             ax.add_patch(circle_patch[i])
             if i != n - 1:
@@ -725,12 +844,12 @@ class CaterpillarDiagram:
                 )
             else:
                 pass
-
+        ax.autoscale_view()
         ax.set_aspect(1)
         plt.grid(False)
         plt.axis("off")
         plt.savefig(
-            f"{self.output_path}/caterpillar.jpeg", dpi=300,
+            f"{self.output_path}/caterpillar.jpeg", dpi=400,
         )
 
         self.caterpillar_fig = fig
