@@ -3,13 +3,13 @@ requires = ["setuptools>=61.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "caterpillarmech"
-version = "0.1"
+name = "caterpillard"
+version = "0.0.1"
 authors = [
   { name="Prabal Pratap Singh", email="mechaprabal@gmail.com" },
-  { name="Deepu Philip", email="prabal@iitk.ac.in" },
+  { name="Deepu Philip", email="dphilip@iitk.ac.in" },
 ]
-description = "Caterpillar Diagram Test"
+description = "Caterpillar Diagram"
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.7"
@@ -28,11 +28,11 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     'sphinx', # for documentation
-  'myst-parser', # markdown parser for sphinx
-  'sphinx-autobuild', # monitor for doc changes
-  'furo', #theme for documentation
-  'nbsphinx', # for notebooks in docs
-  'sphinxcontrib-napoleon', # for numpy style docstrings
+    'myst-parser', # markdown parser for sphinx
+    'sphinx-autobuild', # monitor for doc changes
+    'furo', #theme for documentation
+    'nbsphinx', # for notebooks in docs
+    'sphinxcontrib-napoleon', # for numpy style docstrings
 ]
 
 # [project.urls]
