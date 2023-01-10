@@ -1,4 +1,5 @@
 import pytest
+import numpy as np
 import pandas as pd
 from caterpillard import CaterpillarDiagram
 import importlib.resources
@@ -189,3 +190,30 @@ def test_n_last_cohort_param_value(test_data):
         cd.schema_transitions()
         cd.stationary_matrix(n_sim_iter=100)
         assert cd.generate(data_index=92, n_last_cohorts=55)
+
+
+def test_input_dataframe_numeric():
+    """
+    This test will pass if it catches the exception when input dataframe is non-numeric
+    """
+    test_data_val = np.random.randint(low=1, high=90, size=(5, 7))
+    test_data = pd.DataFrame(index=range(5), columns=range(7), data=test_data_val)
+
+    with pytest.raises(SystemExit):
+        cd = CaterpillarDiagram(
+            data=test_data.astype(str), relative=True, output_path=None,
+        )
+
+
+def test_input_dataseries_numeric():
+    """
+    This test will pass if it catches the exception when input data series is non-numeric
+    """
+    test_data_val = np.random.randint(low=1, high=90, size=70)
+    test_data = pd.Series(index=range(70), data=test_data_val)
+
+    with pytest.raises(SystemExit):
+        cd = CaterpillarDiagram(
+            data=test_data.astype(str), relative=False, output_path=None,
+        )
+
