@@ -94,7 +94,18 @@ class CaterpillarDiagram:
                 if Path(output_path).exists():
                     self.output_path = output_path
                 else:
-                    raise FileNotFoundError
+
+                    try:
+                        os.mkdir(output_path)
+                    except FileExistsError as e:
+                        sys.exit(
+                            "Not able to create directory for output path" + str(e)
+                        )
+                    except PermissionError as e:
+                        sys.exit(
+                            "Operating System level error when creating directory"
+                            + str(e)
+                        )
             else:
                 raise TypeError("Parameter output_path must be of String")
 
@@ -167,7 +178,7 @@ class CaterpillarDiagram:
         return
 
     def schema(self, data, out="color"):
-        """Method for color assignment using proposed color schema
+        """Method for color assignment using proposed color schema.
         
         This method assigns a color or a level based on the proposed
         color schema in the original article available at 
@@ -515,6 +526,11 @@ class CaterpillarDiagram:
             The `complete_cohort_df` is an instance attribute that
             contains the color and radius for each cohort
         """
+        # Check if complete cohort df is available
+        try:
+            self.complete_cohort_df
+        except AttributeError as e:
+            sys.exit(e)
         self.logger.debug("Calculating sizes for each cohort")
         print("Calculating sizes for each cohort")
         quartiles_description_d11 = pd.Series(
@@ -579,6 +595,12 @@ class CaterpillarDiagram:
             Stores the consecutive color transitions as a
             Pandas Dataframe 
         """
+        # Check if complete cohort df is available
+        try:
+            self.complete_cohort_df
+        except AttributeError as e:
+            sys.exit(e)
+
         self.logger.debug("Finding transitions")
         print("Finding transitions")
 
@@ -626,6 +648,22 @@ class CaterpillarDiagram:
 
         
         """
+        try:
+            assert isinstance(n_sim_iter, int)
+        except AssertionError as e:
+            sys.exit("Type Error " + str(e))
+
+        try:
+            assert n_sim_iter > 0
+        except AssertionError as e:
+            sys.exit("Value Error " + str(e))
+
+        # Check if complete cohort df is available
+        try:
+            self.transition_mat
+        except AttributeError as e:
+            sys.exit(e)
+
         self.logger.debug("Finding stationary matrix")
         print("Finding stationary matrix")
         # trans_mat_array = self.transition_mat.fillna(value=0).to_numpy()
