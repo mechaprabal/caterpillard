@@ -5,6 +5,7 @@ import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import pandas.api.types as ptypes
 
 from collections import Counter
 from pathlib import Path
@@ -84,6 +85,25 @@ class CaterpillarDiagram:
             self.relative = relative
         else:
             raise TypeError("Parameter relative must be of Boolean Type")
+
+        # Check if input data columns are numeric
+        if isinstance(data, pd.DataFrame):
+
+            try:
+                assert all(
+                    ptypes.is_numeric_dtype(self.data.loc[:, col])
+                    for col in self.data.columns
+                )
+            except AssertionError as e:
+                sys.exit("Input data values are non-numeric")
+
+        elif isinstance(data, pd.Series):
+            # Check if input data columns are numeric
+            try:
+                assert ptypes.is_numeric_dtype(self.data)
+
+            except AssertionError as e:
+                sys.exit("Input data values are non-numeric")
 
         if output_path is not None:
             # Check if user-defined path is in string format
