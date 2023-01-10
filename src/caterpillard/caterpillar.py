@@ -344,7 +344,7 @@ class CaterpillarDiagram:
         if isinstance(self.data, pd.DataFrame):
             self.logger.debug("DataFrame received")  # Log
             self.logger.debug("Filling NAs with zero")
-            self.data.fillna(value=0, inplace=True)
+            self.data = self.data.fillna(value=0)
             d11 = self.data.diff(periods=1, axis=1).iloc[:, 1:]
             d12 = d11.shift(periods=-1, axis=1).iloc[:, :-1]
             d2 = d11.diff(periods=1, axis=1).iloc[:, 1:]
