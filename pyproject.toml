@@ -1,15 +1,17 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
 
 [project]
-name = "caterpillar_test_mechaprabal"
+name = "caterpillarmech"
 version = "0.1"
 authors = [
   { name="Prabal Pratap Singh", email="mechaprabal@gmail.com" },
+  { name="Deepu Philip", email="prabal@iitk.ac.in" },
 ]
 description = "Caterpillar Diagram Test"
 readme = "README.md"
+license = { file = "LICENSE" }
 requires-python = ">=3.7"
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -21,7 +23,11 @@ dependencies = [
   'pandas',
   'matplotlib',
   'progressbar2',
-  'sphinx', # for documentation
+]
+
+[project.optional-dependencies]
+dev = [
+    'sphinx', # for documentation
   'myst-parser', # markdown parser for sphinx
   'sphinx-autobuild', # monitor for doc changes
   'furo', #theme for documentation
@@ -29,6 +35,18 @@ dependencies = [
   'sphinxcontrib-napoleon', # for numpy style docstrings
 ]
 
-[project.urls]
-"Homepage" = ""
-"Bug Tracker" = ""
+# [project.urls]
+# "Homepage" = ""
+# "Bug Tracker" = ""
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+namespaces = true
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "src"
+]
