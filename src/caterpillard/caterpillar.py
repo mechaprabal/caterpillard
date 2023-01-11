@@ -116,6 +116,7 @@ class CaterpillarDiagram:
 
                     try:
                         os.mkdir(output_path)
+                        self.output_path = output_path
                     except FileExistsError as e:
                         sys.exit(
                             "Not able to create directory for output path" + str(e)
@@ -188,9 +189,13 @@ class CaterpillarDiagram:
         """
         self.logger.debug("Summarizing Data")
         print("Summarizing Data")
-        self.logger.info(self.data.info())
-        self.logger.info(self.data.T.info())
-        self.logger.debug(f"Length of data: {len(self.data.T)}")
+        if self.relative:
+            self.logger.info(self.data.info())
+            self.logger.debug(f"Length of data: {len(self.data.T)}")
+        else:
+            self.logger.info(self.data.describe())
+            self.logger.debug(f"Length of data: {len(self.data.T)}")
+
         self.logger.debug(f"Number of cohorts in caterpillar: {len(self.data.T) - 2}")
         self.n_cohorts = len(self.data.T) - 2
 
@@ -838,6 +843,12 @@ class CaterpillarDiagram:
             # colors = ["red", "green", "cyan", "yellow", "orange", "red", "red"]
             colors = chosen_subset["color"][-n:].to_list()
 
+        elif self.relative and data_index is None:
+            # relative analysis is true and data_index is not provided by
+            # user then the package will raise an error
+            sys.exit(
+                "Relative analysis must have a data_index parameter for diagram generation"
+            )
         else:
             # radii will use the list of radius of each consecutive
             # cohort calculated earlier
