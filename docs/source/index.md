@@ -6,9 +6,11 @@
 
 ```{include} ../../README.md
 ```
+
 ```{warning}
 This documentation is under active development. 
 ```
+
 1. Read installation instructions at {ref}`Installation`.
 
 
@@ -18,8 +20,9 @@ This documentation is under active development.
 :caption: 'Contents'
 :maxdepth: 4
 
-usage
+getting_started
 notebooks/tutorial
+source_code_details
 ```
 
 <!-- # Indices and tables
