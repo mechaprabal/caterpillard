@@ -27,6 +27,9 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+    'autopep8',
+    'flake8',
+    'black',
     'sphinx', # for documentation
     'myst-parser', # markdown parser for sphinx
     'sphinx-autobuild', # monitor for doc changes
