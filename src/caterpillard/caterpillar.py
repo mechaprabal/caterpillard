@@ -853,11 +853,11 @@ class CaterpillarDiagram:
             # radii will use the list of radius of each consecutive
             # cohort calculated earlier
             # radii = [4, 2, 6, 8, 2, 2, 6]
-            radii = self.complete_cohort_df["final_cohort_radius"].to_list()
+            radii = self.complete_cohort_df["final_cohort_radius"][-n:].to_list()
 
             # list of colors
             # colors = ["red", "green", "cyan", "yellow", "orange", "red", "red"]
-            colors = self.complete_cohort_df["color"].to_list()
+            colors = self.complete_cohort_df["color"][-n:].to_list()
 
         # lx_s is a list of initiating coordinate of the line
         # between each cohort

@@ -158,6 +158,27 @@ def test_data_index_param_value(test_data):
         assert cd.generate(data_index=340, n_last_cohorts=15)
 
 
+def test_data_index_and_relative_param_value(test_data):
+    """
+    Test passes when method raises an error for 
+    wrong combination of data input in
+    data_index param and relative param
+
+    When relative param is True and data_index is None
+    then raise systemExit
+    """
+    with pytest.raises(SystemExit):
+        cd = CaterpillarDiagram(
+            data=test_data.iloc[:10], relative=True, output_path=None,
+        )
+        cd.data_summary()
+        cd.color_schema()
+        cd.caterpillar_size()
+        cd.schema_transitions()
+        cd.stationary_matrix(n_sim_iter=100)
+        assert cd.generate(data_index=None, n_last_cohorts=15)
+
+
 def test_n_last_cohort_param_type(test_data):
     """
     Test passes when method raises an error for 
