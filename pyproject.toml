@@ -38,9 +38,9 @@ dev = [
     'sphinxcontrib-napoleon', # for numpy style docstrings
 ]
 
-# [project.urls]
-# "Homepage" = ""
-# "Bug Tracker" = ""
+[project.urls]
+"Homepage" = "https://github.com/mechaprabal/caterpillard"
+"Bug Tracker" = "https://github.com/mechaprabal/caterpillard/issues"
 
 [tool.setuptools]
 include-package-data = true
