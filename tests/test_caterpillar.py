@@ -1,4 +1,5 @@
 import pytest
+import platform
 import numpy as np
 import pandas as pd
 from caterpillard import CaterpillarDiagram
@@ -44,12 +45,37 @@ def test_init_outpath_type(test_data):
         assert CaterpillarDiagram(data=test_data, relative=True, output_path=1,)
 
 
-def test_init_outpath_permission(test_data):
+def test_init_outpath_permission_linux(test_data):
     # output_path param raises exception when permissions are not present to rw
-    with pytest.raises(PermissionError):
-        assert CaterpillarDiagram(
-            data=test_data, relative=True, output_path="/root/x/",
-        )
+    if platform.system == "Linux":
+        with pytest.raises(PermissionError):
+            assert CaterpillarDiagram(
+                data=test_data, relative=True, output_path="/root/x/",
+            )
+    else:
+        pass
+
+
+def test_init_outpath_permission_windows(test_data):
+    # output_path param raises exception when permissions are not present to rw
+    if platform.system == "Windows":
+        with pytest.raises(PermissionError):
+            assert CaterpillarDiagram(
+                data=test_data, relative=True, output_path="C:\Windows\System32",
+            )
+    else:
+        pass
+
+
+def test_init_outpath_permission_mac(test_data):
+    # output_path param raises exception when permissions are not present to rw
+    if platform.system == "Darwin":
+        with pytest.raises(PermissionError):
+            assert CaterpillarDiagram(
+                data=test_data, relative=True, output_path="/root/x/",
+            )
+    else:
+        pass
 
 
 def test_init_input_data_type_mismatch(test_data):
