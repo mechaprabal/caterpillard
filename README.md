@@ -6,7 +6,7 @@
 ----
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) [![License: AGPL
 v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0) [![made-with-sphinx-doc](https://img.shields.io/badge/Made%20with-Sphinx-1f425f.svg)](https://www.sphinx-doc.org/) ![PyPI](https://img.shields.io/pypi/v/caterpillard?label=pypi%20package)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/caterpillard)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/caterpillard) [![Documentation Status](https://readthedocs.org/projects/caterpillard/badge/?version=latest)](https://caterpillard.readthedocs.io/en/latest/?badge=latest)
 ----
 
 
@@ -66,7 +66,7 @@ To install `caterpillard` package from PyPI:
 
 ## Documentation
 
-The documentation for the package is available at <insert link>
+The documentation for the package is available at [here](https://caterpillard.readthedocs.io/en/latest/)
 
 
 ## License
