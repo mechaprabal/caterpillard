@@ -8,6 +8,10 @@ To install `caterpillard` package from PyPI:
 (env) $ pip install caterpillard
 ```
 
+## Compatibility
+
+This package has been tested on Python 3.9 and Python 3.10.
+
 ## Usage guide
 
 The detailed {doc}`tutorial </notebooks/tutorial>` section of the documentation provides a

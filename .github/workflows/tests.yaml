@@ -1,0 +1,29 @@
+name: Caterpillar Diagram Automated Tests
+
+on: 
+  push:
+    branches: 
+     - 'main'
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.9", "3.10"]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install tox and deps
+        run: | 
+          python -m pip install --upgrade pip
+          pip install tox tox-gh-actions
+      - name: Run tox
+        # Run tox using the version of Python in `PATH`
+        run: tox -e py

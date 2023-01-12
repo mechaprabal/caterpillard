@@ -56,6 +56,10 @@ namespaces = true
 where = ["src"]
 
 [tool.pytest.ini_options]
+addopts = "--cov=caterpillard"
+testpaths = [
+    "tests",
+]
 pythonpath = [
   "src"
 ]
