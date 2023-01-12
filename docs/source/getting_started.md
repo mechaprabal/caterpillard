@@ -10,7 +10,8 @@ To install `caterpillard` package from PyPI:
 
 ## Compatibility
 
-This package has been tested on Python 3.9 and Python 3.10.
+This package has been tested on Python 3.9 and Python 3.10 across all major operating
+systems like `Linux`, `MacOs` and `Windows`.
 
 ## Usage guide
 
@@ -20,10 +21,19 @@ complete walkthrough of the package with all the available methods and capabilit
 ## Implementation details
 
 A detailed source code definitions are available at {doc}`Source Code
-<source_code_details>` page. 
+<source_code_details>` page.
+
 ## Cite this package
 
-To cite this package, please use the following bib entry for the package and the
-associated article.
 
+If you utilize this package then please use the bibliography in IEEE format to cite this
+package and the associated Journal article in your work:
+
+> [1] Prabal Pratap Singh and Deepu Philip, “Caterpillar Diagram.” Jan. 12, 2023.
+> Accessed: Jan. 12, 2023. [Online]. Available:
+> https://github.com/mechaprabal/caterpillard
+
+> [2] P. P. Singh and D. Philip, “An innovative color-coding scheme for terrorism threat
+> advisory system,” Methodological Innovations, p. 20597991221144576, Dec. 2022, doi:
+> 10.1177/20597991221144577.
 

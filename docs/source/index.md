@@ -16,4 +16,5 @@
 getting_started
 notebooks/tutorial
 source_code_details
+Contributions
 ```

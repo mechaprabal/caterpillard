@@ -4,11 +4,12 @@
 > forecasting the next-state transition using Markov chains.
 
 ----
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) [![License: AGPL
-v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0) [![made-with-sphinx-doc](https://img.shields.io/badge/Made%20with-Sphinx-1f425f.svg)](https://www.sphinx-doc.org/) ![PyPI](https://img.shields.io/pypi/v/caterpillard?label=pypi%20package)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/caterpillard) [![Documentation Status](https://readthedocs.org/projects/caterpillard/badge/?version=latest)](https://caterpillard.readthedocs.io/en/latest/?badge=latest)
-----
 
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)  ![GitHub](https://img.shields.io/github/license/mechaprabal/caterpillard?style=for-the-badge)  [![made-with-sphinx-doc](https://img.shields.io/badge/Made%20with-Sphinx-1f425f.svg)](https://www.sphinx-doc.org/)  ![PyPI](https://img.shields.io/pypi/v/caterpillard?color=lightgreen&label=caterpillard%20%40%20PYPI&style=for-the-badge)
+
+![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/mechaprabal/caterpillard/tests.yaml?branch=main&style=for-the-badge)  [![Documentation Status](https://readthedocs.org/projects/caterpillard/badge/?version=latest)](https://caterpillard.readthedocs.io/en/latest/?badge=latest)  ![PyPI - Downloads](https://img.shields.io/pypi/dm/caterpillard?color=skyblue&label=PyPI%20Downloads&style=flat-square)  ![GitHub repo size](https://img.shields.io/github/repo-size/mechaprabal/caterpillard?style=flat-square)  
+
+----
 
 This is a software implementation of the proposed Caterpillar Diagram in the research
 article titled [__"An innovative color-coding scheme for terrorism threat advisory
@@ -66,17 +67,37 @@ To install `caterpillard` package from PyPI:
 
 ## Documentation
 
-The documentation for the package is available at [here](https://caterpillard.readthedocs.io/en/latest/)
+The documentation for the package is available
+[here](https://caterpillard.readthedocs.io/en/latest/)
 
+## Compatibility
+
+This package has been tested on Python 3.9 and Python 3.10 across all major operating
+systems like `Linux`, `MacOs` and `Windows`.
 
 ## License
 
+![GitHub](https://img.shields.io/github/license/mechaprabal/caterpillard?style=for-the-badge)
+
 This package is licensed under **GNU Affero General Public License v3.0**
+
+## Contributions
+
+Please read `CONTRIBUTING.md` for more details.
 
 ## Cite
 
 This package has been developed as a part of the doctoral research titled "Modeling &
 Analysis of Terrorism" by Prabal Pratap Singh under the supervision of Prof. Deepu Philip
-at [Indian Institute of Technology Kanpur](https://www.iitk.ac.in/). If you utilize this
-package then please use the following information to cite this package and the associated
-Journal article in your work:
+at [Indian Institute of Technology Kanpur](https://www.iitk.ac.in/).
+
+If you utilize this package then please use the bibliography in IEEE format to cite this
+package and the associated Journal article in your work:
+
+> [1] Prabal Pratap Singh and Deepu Philip, “Caterpillar Diagram.” Jan. 12, 2023.
+> Accessed: Jan. 12, 2023. [Online]. Available:
+> https://github.com/mechaprabal/caterpillard
+
+> [2] P. P. Singh and D. Philip, “An innovative color-coding scheme for terrorism threat
+> advisory system,” Methodological Innovations, p. 20597991221144576, Dec. 2022, doi:
+> 10.1177/20597991221144577.

@@ -6,7 +6,3 @@
 .. autoclass:: caterpillar.CaterpillarDiagram
    :members:
 ```
-
-<!-- ```{eval-rst}
-.. autofunction:: caterpillar.main
-``` -->
