@@ -37,7 +37,7 @@ extensions = [
     "sphinx.ext.autosectionlabel",  # for referring to particular sections
     "nbsphinx",  # for notebooks in docs
     "sphinx.ext.autodoc",  # utilize docstrings for docs
-    "sphinxcontrib.napoleon",  # for numpy style documentation
+    "sphinx.ext.napoleon",  # for numpy style documentation
 ]
 
 autodoc_default_options = {

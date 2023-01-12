@@ -1,15 +1,20 @@
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) [![License: AGPL
-v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0) [![made-with-sphinx-doc](https://img.shields.io/badge/Made%20with-Sphinx-1f425f.svg)](https://www.sphinx-doc.org/) ![PyPI](https://img.shields.io/pypi/v/caterpillard?label=pypi%20package)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/caterpillard)
-
 # Caterpillar Diagram
 
 > A generic innovative visualization technique for univariate time-series data capable of
 > forecasting the next-state transition using Markov chains.
 
+----
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) [![License: AGPL
+v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0) [![made-with-sphinx-doc](https://img.shields.io/badge/Made%20with-Sphinx-1f425f.svg)](https://www.sphinx-doc.org/) ![PyPI](https://img.shields.io/pypi/v/caterpillard?label=pypi%20package)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/caterpillard)
+----
+
+
 This is a software implementation of the proposed Caterpillar Diagram in the research
 article titled [__"An innovative color-coding scheme for terrorism threat advisory
 system".__](https://doi.org/10.1177/20597991221144577)
+
+----
 
 ## What is a Caterpillar Diagram?
 
