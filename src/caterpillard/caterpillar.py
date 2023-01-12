@@ -193,6 +193,7 @@ class CaterpillarDiagram:
             self.logger.info(self.data.info())
             self.logger.debug(f"Length of data: {len(self.data.T)}")
         else:
+            print(self.data.describe())
             self.logger.info(self.data.describe())
             self.logger.debug(f"Length of data: {len(self.data.T)}")
 
