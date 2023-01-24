@@ -14,9 +14,9 @@ authors:
    orcid: 0000-0002-4607-9020
    affiliation: "1"
 affiliations:
- - name: Industrial & Management Engineering, Indian Institute of Technology Kanpur
+ - name: Department of Industrial & Management Engineering, Indian Institute of Technology Kanpur
    index: 1
-date: 15 January 2023
+date: 24 January 2023
 bibliography: paper.bib
 ---
 
