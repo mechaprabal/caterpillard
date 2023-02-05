@@ -29,7 +29,7 @@ A detailed source code definitions are available at {doc}`Source Code
 If you utilize this package then please use the bibliography in IEEE format to cite this
 package and the associated Journal article in your work:
 
-> [![DOI](https://zenodo.org/badge/{587612078}.svg)](https://zenodo.org/badge/latestdoi/{587612078})
+> [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7607939.svg)](https://doi.org/10.5281/zenodo.7607939)
 
 > P. P. Singh and D. Philip, “An innovative color-coding scheme for terrorism threat
 > advisory system,” Methodological Innovations, p. 20597991221144576, Dec. 2022, doi:
