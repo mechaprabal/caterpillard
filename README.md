@@ -7,7 +7,7 @@
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)  ![GitHub](https://img.shields.io/github/license/mechaprabal/caterpillard?style=for-the-badge)  [![made-with-sphinx-doc](https://img.shields.io/badge/Made%20with-Sphinx-1f425f.svg)](https://www.sphinx-doc.org/)  ![PyPI](https://img.shields.io/pypi/v/caterpillard?color=lightgreen&label=caterpillard%20%40%20PYPI&style=for-the-badge)
 
-![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/mechaprabal/caterpillard/tests.yaml?branch=main&style=for-the-badge)  [![Documentation Status](https://readthedocs.org/projects/caterpillard/badge/?version=latest)](https://caterpillard.readthedocs.io/en/latest/?badge=latest)  ![PyPI - Downloads](https://img.shields.io/pypi/dm/caterpillard?color=skyblue&label=PyPI%20Downloads&style=flat-square)  ![GitHub repo size](https://img.shields.io/github/repo-size/mechaprabal/caterpillard?style=flat-square)  
+![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/mechaprabal/caterpillard/tests.yaml?branch=main&style=for-the-badge)  [![Documentation Status](https://readthedocs.org/projects/caterpillard/badge/?version=latest)](https://caterpillard.readthedocs.io/en/latest/?badge=latest)  ![PyPI - Downloads](https://img.shields.io/pypi/dm/caterpillard?color=skyblue&label=PyPI%20Downloads&style=flat-square)  ![GitHub repo size](https://img.shields.io/github/repo-size/mechaprabal/caterpillard?style=flat-square)  [![DOI](https://zenodo.org/badge/{587612078}.svg)](https://zenodo.org/badge/latestdoi/{587612078})
 
 ----
 
@@ -94,9 +94,7 @@ at [Indian Institute of Technology Kanpur](https://www.iitk.ac.in/).
 If you utilize this package then please use the bibliography in IEEE format to cite this
 package and the associated Journal article in your work:
 
-> [1] Prabal Pratap Singh and Deepu Philip, “Caterpillar Diagram.” Jan. 12, 2023.
-> Accessed: Jan. 12, 2023. [Online]. Available:
-> https://github.com/mechaprabal/caterpillard
+> [![DOI](https://zenodo.org/badge/{587612078}.svg)](https://zenodo.org/badge/latestdoi/{587612078})
 
 > [2] P. P. Singh and D. Philip, “An innovative color-coding scheme for terrorism threat
 > advisory system,” Methodological Innovations, p. 20597991221144576, Dec. 2022, doi:

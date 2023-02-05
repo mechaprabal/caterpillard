@@ -29,11 +29,9 @@ A detailed source code definitions are available at {doc}`Source Code
 If you utilize this package then please use the bibliography in IEEE format to cite this
 package and the associated Journal article in your work:
 
-> [1] Prabal Pratap Singh and Deepu Philip, “Caterpillar Diagram.” Jan. 12, 2023.
-> Accessed: Jan. 12, 2023. [Online]. Available:
-> https://github.com/mechaprabal/caterpillard
+> [![DOI](https://zenodo.org/badge/{587612078}.svg)](https://zenodo.org/badge/latestdoi/{587612078})
 
-> [2] P. P. Singh and D. Philip, “An innovative color-coding scheme for terrorism threat
+> P. P. Singh and D. Philip, “An innovative color-coding scheme for terrorism threat
 > advisory system,” Methodological Innovations, p. 20597991221144576, Dec. 2022, doi:
 > 10.1177/20597991221144577.
 
